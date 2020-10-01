@@ -1,6 +1,7 @@
 package com.cinema.dao.impl;
 
 import com.cinema.dao.MovieDao;
+import com.cinema.exeption.DataProcessingException;
 import com.cinema.lib.Dao;
 import com.cinema.model.Movie;
 import com.cinema.util.HibernateUtil;
@@ -25,7 +26,7 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't add movie " + movie.getTitle());
+            throw new DataProcessingException("Can't add movie " + movie.getTitle(), e);
         } finally {
             if (session != null) {
                 session.close();
@@ -39,7 +40,7 @@ public class MovieDaoImpl implements MovieDao {
             Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
             return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all movies");
+            throw new DataProcessingException("Can't get all movies", e);
         }
     }
 }
