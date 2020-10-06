@@ -1,32 +1,33 @@
 package com.cinema.dao.impl;
 
-import com.cinema.dao.MovieDao;
+import com.cinema.dao.CinemaHallDao;
 import com.cinema.exeption.DataProcessingException;
 import com.cinema.lib.Dao;
-import com.cinema.model.Movie;
+import com.cinema.model.CinemaHall;
 import com.cinema.util.HibernateUtil;
-import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.List;
+
 @Dao
-public class MovieDaoImpl implements MovieDao {
+public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
-    public Movie add(Movie movie) {
+    public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.persist(cinemaHall);
             transaction.commit();
-            return movie;
+            return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add movie " + movie.getTitle(), e);
+            throw new DataProcessingException("Can't add cinema hall", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -35,12 +36,13 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public List<Movie> getAll() {
+    public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Movie> getAllMoviesQuery = session.createQuery("FROM Movie", Movie.class);
-            return getAllMoviesQuery.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movies", e);
+            Query<CinemaHall> getAllCinemaHallQuery
+                    = session.createQuery("FROM CinemaHall", CinemaHall.class);
+            return getAllCinemaHallQuery.getResultList();
+        }catch (Exception e) {
+            throw new DataProcessingException("Can't get all cinema halls", e);
         }
     }
 }
