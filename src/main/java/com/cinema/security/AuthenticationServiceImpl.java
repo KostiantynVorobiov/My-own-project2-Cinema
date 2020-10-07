@@ -6,11 +6,10 @@ import com.cinema.lib.Service;
 import com.cinema.model.User;
 import com.cinema.service.UserService;
 import com.cinema.util.HashUtil;
-
 import java.util.Optional;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService{
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Inject
     private UserService userService;
@@ -18,8 +17,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     @Override
     public User login(String email, String password) throws AuthenticationException {
         Optional<User> userFromDb = userService.findByEmail(email);
-        if(userFromDb.isPresent() && userFromDb.get().getPassword().equals(HashUtil.
-                hashPassword(password, userFromDb.get().getSalt()))) {
+        if (userFromDb.isPresent() && userFromDb.get().getPassword().equals(HashUtil
+                . hashPassword(password, userFromDb.get().getSalt()))) {
             return userFromDb.get();
         }
         throw new AuthenticationException("Incorrect login or password");
@@ -29,8 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     public User register(String email, String password) {
         User user = new User();
         user.setEmail(email);
-        user.setSalt(HashUtil.getSalt());
-        user.setPassword(HashUtil.hashPassword(password, user.getSalt()));
+        user.setPassword(password);
         userService.add(user);
         return user;
     }

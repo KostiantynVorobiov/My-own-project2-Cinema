@@ -11,7 +11,6 @@ import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
 import com.cinema.service.UserService;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -69,18 +68,11 @@ public class Main {
         userService.add(alcapone);
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
-        User mClane = new User();
-        mClane.setEmail("oreshek@cop.com");
-        mClane.setPassword("911");
-//        authenticationService.register(mClane.getEmail(), mClane.getPassword());
-//        System.out.println(userService.findByEmail(mClane.getEmail()).get());
-//        User mClane2 = new User();
-//        mClane2.setEmail("oreshek@cop.com");
-//        mClane2.setPassword("911");
-//        authenticationService.register(mClane2.getEmail(), mClane2.getPassword());
-        System.out.println("User1 has been registered: "
-                + authenticationService.register(mClane.getEmail(), mClane.getPassword()));
-        System.out.println("User1 has logged in: "
-                + authenticationService.login(mClane.getEmail(), mClane.getPassword()));
+        User mclane = new User();
+        mclane.setEmail("oreshek@cop.com");
+        mclane.setPassword("911");
+        authenticationService.register(mclane.getEmail(), mclane.getPassword());
+        authenticationService.login(mclane.getEmail(), mclane.getPassword());
+        System.out.println(userService.findByEmail(mclane.getEmail()).get());
     }
 }

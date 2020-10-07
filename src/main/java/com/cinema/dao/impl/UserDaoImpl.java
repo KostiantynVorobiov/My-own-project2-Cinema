@@ -5,10 +5,10 @@ import com.cinema.exeption.DataProcessingException;
 import com.cinema.lib.Dao;
 import com.cinema.model.User;
 import com.cinema.util.HibernateUtil;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.util.Optional;
 
 @Dao
 public class UserDaoImpl implements UserDao {
