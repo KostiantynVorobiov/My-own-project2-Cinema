@@ -1,19 +1,23 @@
 package com.cinema;
 
+import com.cinema.exeption.AuthenticationException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
+import com.cinema.model.User;
+import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.cinema");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         Movie furious = new Movie();
         movieService.getAll().forEach(System.out::println);
@@ -56,5 +60,19 @@ public class Main {
         movieSessionService.add(movieSession2);
         movieSessionService.findAvailableSessions(cars.getId(),
                 LocalDate.now().plusDays(1)).forEach(System.out::println);
+
+        UserService userService = (UserService) injector.getInstance(UserService.class);
+        User alcapone = new User();
+        alcapone.setEmail("alcaponchik@porishau.com");
+        alcapone.setPassword("777");
+        userService.add(alcapone);
+        AuthenticationService authenticationService =
+                (AuthenticationService) injector.getInstance(AuthenticationService.class);
+        User mclane = new User();
+        mclane.setEmail("oreshek@cop.com");
+        mclane.setPassword("911");
+        authenticationService.register(mclane.getEmail(), mclane.getPassword());
+        authenticationService.login(mclane.getEmail(), mclane.getPassword());
+        System.out.println(userService.findByEmail(mclane.getEmail()).get());
     }
 }
