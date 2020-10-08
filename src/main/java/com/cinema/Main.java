@@ -10,7 +10,10 @@ import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
+
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -62,17 +65,25 @@ public class Main {
                 LocalDate.now().plusDays(1)).forEach(System.out::println);
 
         UserService userService = (UserService) injector.getInstance(UserService.class);
-        User alcapone = new User();
-        alcapone.setEmail("alcaponchik@porishau.com");
-        alcapone.setPassword("777");
-        userService.add(alcapone);
+        User panas = new User();
+        panas.setEmail("panas@u.com");
+        panas.setPassword("777");
+        userService.add(panas);
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
-        User mclane = new User();
-        mclane.setEmail("oreshek@cop.com");
-        mclane.setPassword("911");
-        authenticationService.register(mclane.getEmail(), mclane.getPassword());
-        authenticationService.login(mclane.getEmail(), mclane.getPassword());
-        System.out.println(userService.findByEmail(mclane.getEmail()).get());
+        User onic = new User();
+        onic.setEmail("onic@u.com");
+        onic.setPassword("911");
+
+        authenticationService.register(onic.getEmail(), onic.getPassword());
+
+        authenticationService.login(onic.getEmail(), onic.getPassword());
+        System.out.println(userService.findByEmail(onic.getEmail()).get());
+        System.out.println("User from DB " + userService.findByEmail("onic@u.com").get());
+
+        ShoppingCartService shoppingCartService =
+                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        shoppingCartService.registerNewShoppingCart(panas);
+        shoppingCartService.addSession(movieSession1, panas);
     }
 }
