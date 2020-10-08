@@ -24,7 +24,7 @@ public class HashUtil {
                 hashedPassword.append(String.format("%02x", b));
             }
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Can't get hash from password");
+            throw new RuntimeException("Can't get hash from password",e);
         }
         return hashedPassword.toString();
     }
