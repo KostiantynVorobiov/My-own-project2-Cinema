@@ -26,8 +26,9 @@ public class TicketDaoImpl implements TicketDao {
             }
             throw new DataProcessingException("Can't add ticket with id " + ticket.getId(), e);
         } finally {
-            if (session != null) ;
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }

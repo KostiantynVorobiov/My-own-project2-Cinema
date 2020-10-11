@@ -12,8 +12,6 @@ import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
-
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -79,11 +77,16 @@ public class Main {
 
         authenticationService.login(onic.getEmail(), onic.getPassword());
         System.out.println(userService.findByEmail(onic.getEmail()).get());
-        System.out.println("User from DB " + userService.findByEmail("onic@u.com").get());
+        User foundUser = userService.findByEmail("onic@u.com").get();
+        System.out.println("My found user: " + foundUser);
 
         ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         shoppingCartService.registerNewShoppingCart(panas);
         shoppingCartService.addSession(movieSession1, panas);
+        System.out.println("Get cart by panas user: " + shoppingCartService.getByUser(panas));
+        shoppingCartService.clear(shoppingCartService.getByUser(panas));
+        System.out.println("Get cart by panas user after clear: "
+                + shoppingCartService.getByUser(panas));
     }
 }
