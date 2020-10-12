@@ -74,7 +74,6 @@ public class Main {
         onic.setPassword("911");
 
         authenticationService.register(onic.getEmail(), onic.getPassword());
-
         authenticationService.login(onic.getEmail(), onic.getPassword());
         System.out.println(userService.findByEmail(onic.getEmail()).get());
         User foundUser = userService.findByEmail("onic@u.com").get();
@@ -82,11 +81,12 @@ public class Main {
 
         ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
-        shoppingCartService.registerNewShoppingCart(panas);
-        shoppingCartService.addSession(movieSession1, panas);
-        System.out.println("Get cart by panas user: " + shoppingCartService.getByUser(panas));
-        shoppingCartService.clear(shoppingCartService.getByUser(panas));
-        System.out.println("Get cart by panas user after clear: "
-                + shoppingCartService.getByUser(panas));
+        authenticationService.register("emily@com", "12345");
+        User emily = authenticationService.login("emily@com", "12345");
+        shoppingCartService.addSession(movieSession1, emily);
+        System.out.println("Get cart by Emily user: " + shoppingCartService.getByUser(emily));
+        shoppingCartService.clear(shoppingCartService.getByUser(emily));
+        System.out.println("Get cart by Emily user after clear: "
+                + shoppingCartService.getByUser(emily));
     }
 }

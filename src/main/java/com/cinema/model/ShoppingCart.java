@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,6 +22,8 @@ public class ShoppingCart {
     @OneToMany
     private List<Ticket> tickets;
     @OneToOne
+    @MapsId
+    @JoinColumn(name = "cart_id")
     private User user;
 
     public Long getId() {
