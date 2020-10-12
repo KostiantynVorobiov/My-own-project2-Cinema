@@ -67,6 +67,7 @@ public class Main {
         panas.setEmail("panas@u.com");
         panas.setPassword("777");
         userService.add(panas);
+
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
         User onic = new User();
@@ -74,6 +75,7 @@ public class Main {
         onic.setPassword("911");
 
         authenticationService.register(onic.getEmail(), onic.getPassword());
+
         authenticationService.login(onic.getEmail(), onic.getPassword());
         System.out.println(userService.findByEmail(onic.getEmail()).get());
         User foundUser = userService.findByEmail("onic@u.com").get();
@@ -88,5 +90,18 @@ public class Main {
         shoppingCartService.clear(shoppingCartService.getByUser(emily));
         System.out.println("Get cart by Emily user after clear: "
                 + shoppingCartService.getByUser(emily));
+        shoppingCartService.registerNewShoppingCart(panas);
+        shoppingCartService.addSession(movieSession1, panas);
+        shoppingCartService.addSession(movieSession2, foundUser);
+        System.out.println("Get cart by panas user: " + shoppingCartService.getByUser(panas));
+        shoppingCartService.clear(shoppingCartService.getByUser(panas));
+        System.out.println("Get cart by panas user after clear: "
+                + shoppingCartService.getByUser(panas));
+
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        orderService.completeOrder(shoppingCartService.getByUser(foundUser).getTickets(),
+                foundUser);
+        System.out.println("All orders in found user he is Onic"
+                + orderService.getOrderHistory(foundUser));
     }
 }
