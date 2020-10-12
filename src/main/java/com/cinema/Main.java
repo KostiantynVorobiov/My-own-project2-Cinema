@@ -10,6 +10,7 @@ import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.OrderService;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
 import java.time.LocalDate;
@@ -73,9 +74,7 @@ public class Main {
         User onic = new User();
         onic.setEmail("onic@u.com");
         onic.setPassword("911");
-
         authenticationService.register(onic.getEmail(), onic.getPassword());
-
         authenticationService.login(onic.getEmail(), onic.getPassword());
         System.out.println(userService.findByEmail(onic.getEmail()).get());
         User foundUser = userService.findByEmail("onic@u.com").get();
@@ -101,7 +100,9 @@ public class Main {
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         orderService.completeOrder(shoppingCartService.getByUser(foundUser).getTickets(),
                 foundUser);
+
         System.out.println("All orders in found user he is Onic"
                 + orderService.getOrderHistory(foundUser));
+        orderService.getOrderHistory(foundUser).forEach(System.out::println);
     }
 }
