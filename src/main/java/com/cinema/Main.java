@@ -63,17 +63,16 @@ public class Main {
         movieSessionService.findAvailableSessions(cars.getId(),
                 LocalDate.now().plusDays(1)).forEach(System.out::println);
 
-        UserService userService = (UserService) injector.getInstance(UserService.class);
         User panas = new User();
         panas.setEmail("panas@u.com");
         panas.setPassword("777");
-        userService.add(panas);
 
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
         User onic = new User();
         onic.setEmail("onic@u.com");
         onic.setPassword("911");
+        UserService userService = (UserService) injector.getInstance(UserService.class);
         authenticationService.register(onic.getEmail(), onic.getPassword());
         authenticationService.login(onic.getEmail(), onic.getPassword());
         System.out.println(userService.findByEmail(onic.getEmail()).get());
