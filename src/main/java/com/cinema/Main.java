@@ -10,6 +10,7 @@ import com.cinema.security.AuthenticationService;
 import com.cinema.service.CinemaHallService;
 import com.cinema.service.MovieService;
 import com.cinema.service.MovieSessionService;
+import com.cinema.service.OrderService;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
 import java.time.LocalDate;
@@ -62,17 +63,16 @@ public class Main {
         movieSessionService.findAvailableSessions(cars.getId(),
                 LocalDate.now().plusDays(1)).forEach(System.out::println);
 
-        UserService userService = (UserService) injector.getInstance(UserService.class);
         User panas = new User();
         panas.setEmail("panas@u.com");
         panas.setPassword("777");
-        userService.add(panas);
+
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
         User onic = new User();
         onic.setEmail("onic@u.com");
         onic.setPassword("911");
-
+        UserService userService = (UserService) injector.getInstance(UserService.class);
         authenticationService.register(onic.getEmail(), onic.getPassword());
         authenticationService.login(onic.getEmail(), onic.getPassword());
         System.out.println(userService.findByEmail(onic.getEmail()).get());
@@ -88,5 +88,20 @@ public class Main {
         shoppingCartService.clear(shoppingCartService.getByUser(emily));
         System.out.println("Get cart by Emily user after clear: "
                 + shoppingCartService.getByUser(emily));
+        shoppingCartService.registerNewShoppingCart(panas);
+        shoppingCartService.addSession(movieSession1, panas);
+        shoppingCartService.addSession(movieSession2, foundUser);
+        System.out.println("Get cart by panas user: " + shoppingCartService.getByUser(panas));
+        shoppingCartService.clear(shoppingCartService.getByUser(panas));
+        System.out.println("Get cart by panas user after clear: "
+                + shoppingCartService.getByUser(panas));
+
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        orderService.completeOrder(shoppingCartService.getByUser(foundUser).getTickets(),
+                foundUser);
+
+        System.out.println("All orders in found user he is Onic"
+                + orderService.getOrderHistory(foundUser));
+        orderService.getOrderHistory(foundUser).forEach(System.out::println);
     }
 }
