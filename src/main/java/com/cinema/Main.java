@@ -1,6 +1,5 @@
 package com.cinema;
 
-import com.cinema.dao.impl.CinemaHallDaoImpl;
 import com.cinema.exeption.AuthenticationException;
 import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
@@ -14,10 +13,9 @@ import com.cinema.service.MovieSessionService;
 import com.cinema.service.OrderService;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
-import org.apache.log4j.Logger;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.apache.log4j.Logger;
 
 public class Main {
     private static Injector injector = Injector.getInstance("com.cinema");
@@ -78,7 +76,11 @@ public class Main {
         onic.setPassword("911");
         UserService userService = (UserService) injector.getInstance(UserService.class);
         authenticationService.register(onic.getEmail(), onic.getPassword());
- //       authenticationService.login(onic.getEmail(), onic.getPassword());
+        try {
+            authenticationService.login(onic.getEmail(), onic.getPassword());
+        } catch (AuthenticationException e) {
+            logger.error(e);
+        }
         logger.info("User by email " + userService.findByEmail(onic.getEmail()).get());
         User foundUser = userService.findByEmail("onic@u.com").get();
         logger.info("My found user: " + foundUser);

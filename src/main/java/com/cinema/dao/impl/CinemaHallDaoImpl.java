@@ -6,7 +6,6 @@ import com.cinema.lib.Dao;
 import com.cinema.model.CinemaHall;
 import com.cinema.util.HibernateUtil;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -26,7 +25,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
-            logger.info("Added new cinema hall" + cinemaHall + "successfully");
+            logger.info("Added new cinema hall" + cinemaHall + " successfully");
             return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
