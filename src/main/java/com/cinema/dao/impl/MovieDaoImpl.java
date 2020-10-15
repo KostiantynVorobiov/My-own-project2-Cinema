@@ -25,7 +25,7 @@ public class MovieDaoImpl implements MovieDao {
             transaction = session.beginTransaction();
             session.save(movie);
             transaction.commit();
-            logger.info("Added new movie" + movie + " successfully");
+            logger.info("Added new movie " + movie + " successfully");
             return movie;
         } catch (Exception e) {
             if (transaction != null) {

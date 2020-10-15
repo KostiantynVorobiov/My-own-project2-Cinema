@@ -79,7 +79,7 @@ public class Main {
         try {
             authenticationService.login(onic.getEmail(), onic.getPassword());
         } catch (AuthenticationException e) {
-            logger.error(e);
+            logger.warn("Wrong email or password",e);
         }
         logger.info("User by email " + userService.findByEmail(onic.getEmail()).get());
         User foundUser = userService.findByEmail("onic@u.com").get();
@@ -92,7 +92,7 @@ public class Main {
         try {
             emily = authenticationService.login("emily@com", "12345");
         } catch (AuthenticationException e) {
-            logger.error(e);
+            logger.warn("Wrong email or password",e);
         }
         shoppingCartService.addSession(movieSession1, emily);
         logger.info("Get cart by Emily user: " + shoppingCartService.getByUser(emily));

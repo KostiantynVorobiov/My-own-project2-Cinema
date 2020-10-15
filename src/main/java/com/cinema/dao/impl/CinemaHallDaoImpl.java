@@ -25,7 +25,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
-            logger.info("Added new cinema hall" + cinemaHall + " successfully");
+            logger.info("Added new cinema hall " + cinemaHall + " successfully");
             return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
