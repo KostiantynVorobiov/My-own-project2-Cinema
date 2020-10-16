@@ -25,7 +25,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             transaction = session.beginTransaction();
             session.save(shoppingCart);
             transaction.commit();
-            logger.info("Added new order " + shoppingCart + " successfully");
+            logger.info("Added new shopping cart " + shoppingCart + " successfully");
             return shoppingCart;
         } catch (Exception e) {
             if (transaction != null) {
@@ -66,7 +66,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             transaction = session.beginTransaction();
             session.update(shoppingCart);
             transaction.commit();
-            logger.info("Updated order " + shoppingCart + " successfully");
+            logger.info("Updated shopping cart " + shoppingCart + " successfully");
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
