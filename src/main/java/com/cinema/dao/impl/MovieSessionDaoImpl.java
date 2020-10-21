@@ -2,25 +2,32 @@ package com.cinema.dao.impl;
 
 import com.cinema.dao.MovieSessionDao;
 import com.cinema.exeption.DataProcessingException;
-import com.cinema.lib.Dao;
 import com.cinema.model.MovieSession;
-import com.cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
     private static final Logger logger = Logger.getLogger(MovieSessionDaoImpl.class);
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public MovieSessionDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         logger.info("Trying to find available session");
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getAllMovieSessionQuery
                     = session.createQuery("FROM MovieSession WHERE movie.id = :id "
                     + "AND showTime BETWEEN :start AND :end", MovieSession.class);
@@ -40,7 +47,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
