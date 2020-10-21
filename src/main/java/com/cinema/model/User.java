@@ -60,7 +60,6 @@ public class User {
                 + ", email='" + email + '\''
                 + ", password='" + password + '\''
                 + ", salt=" + Arrays.toString(salt)
-                +
-                '}';
+                + '}';
     }
 }
