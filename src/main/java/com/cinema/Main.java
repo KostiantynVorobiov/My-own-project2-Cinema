@@ -1,7 +1,7 @@
 package com.cinema;
 
+import com.cinema.congig.AppConfig;
 import com.cinema.exeption.AuthenticationException;
-import com.cinema.lib.Injector;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
@@ -16,13 +16,15 @@ import com.cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
-    private static Injector injector = Injector.getInstance("com.cinema");
     private static final Logger logger = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        AnnotationConfigApplicationContext context
+                = new AnnotationConfigApplicationContext(AppConfig.class);
+        MovieService movieService = context.getBean(MovieService.class);
         Movie furious = new Movie();
         movieService.getAll().forEach(logger::info);
         furious.setTitle("Fast and Furious");
@@ -32,11 +34,14 @@ public class Main {
         cars.setTitle("Cars");
         cars.setDescription("Cartoon for children");
         movieService.add(cars);
+        Movie saw = new Movie();
+        saw.setTitle("Saw V");
+        saw.setDescription("Horror and bullying");
+        movieService.add(saw);
         logger.info("All movies");
         movieService.getAll().forEach(logger::info);
 
-        CinemaHallService cinemaHallService = (CinemaHallService)
-                injector.getInstance(CinemaHallService.class);
+        CinemaHallService cinemaHallService = context.getBean(CinemaHallService.class);
         CinemaHall cinemaHallHorror = new CinemaHall();
         cinemaHallHorror.setCapacity(50);
         cinemaHallHorror.setDescription("for horror");
@@ -51,8 +56,7 @@ public class Main {
         movieSession1.setCinemaHall(cinemaHallHorror);
         movieSession1.setMovie(furious);
         movieSession1.setShowTime(LocalDateTime.now());
-        MovieSessionService movieSessionService = (MovieSessionService)
-                injector.getInstance(MovieSessionService.class);
+        MovieSessionService movieSessionService = context.getBean(MovieSessionService.class);
         movieSessionService.add(movieSession1);
         movieSessionService.findAvailableSessions(furious.getId(),
                 LocalDate.now()).forEach(logger::info);
@@ -70,11 +74,11 @@ public class Main {
         panas.setPassword("777");
 
         AuthenticationService authenticationService =
-                (AuthenticationService) injector.getInstance(AuthenticationService.class);
+                context.getBean(AuthenticationService.class);
         User onic = new User();
         onic.setEmail("onic@u.com");
         onic.setPassword("911");
-        UserService userService = (UserService) injector.getInstance(UserService.class);
+        UserService userService = context.getBean(UserService.class);
         authenticationService.register(onic.getEmail(), onic.getPassword());
         try {
             authenticationService.login(onic.getEmail(), onic.getPassword());
@@ -86,7 +90,7 @@ public class Main {
         logger.info("My found user: " + foundUser);
 
         ShoppingCartService shoppingCartService =
-                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+                context.getBean(ShoppingCartService.class);
         authenticationService.register("emily@com", "12345");
         User emily = null;
         try {
@@ -107,7 +111,7 @@ public class Main {
         logger.info("Get cart by Panas user after clear: "
                 + shoppingCartService.getByUser(panas));
 
-        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        OrderService orderService = context.getBean(OrderService.class);
         orderService.completeOrder(shoppingCartService.getByUser(foundUser).getTickets(),
                 foundUser);
 
