@@ -26,14 +26,6 @@ public class MovieController {
         this.movieDtoMapper = movieDtoMapper;
     }
 
-    @GetMapping("/inject")
-    public void inject() {
-        Movie saw = new Movie();
-        saw.setTitle("Saw V");
-        saw.setDescription("Horror and bullying");
-        movieService.add(saw);
-    }
-
     @GetMapping
     public List<MovieResponseDto> getAllMovie() {
         return movieService.getAll().stream()
@@ -44,6 +36,6 @@ public class MovieController {
     @PostMapping
     public String addMovie(@RequestBody MovieRequestDto movieRequestDto) {
         movieService.add(movieDtoMapper.fromRequestDto(movieRequestDto));
-        return "Okay";
+        return "Movie added successfully";
     }
 }
