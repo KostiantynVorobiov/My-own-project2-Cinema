@@ -1,6 +1,6 @@
 package com.cinema.controller;
 
-import com.cinema.model.dto.model.UserRequestDto;
+import com.cinema.model.dto.UserRequestDto;
 import com.cinema.security.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

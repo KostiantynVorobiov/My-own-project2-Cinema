@@ -1,10 +1,9 @@
 package com.cinema.controller;
 
-import com.cinema.model.Movie;
-import com.cinema.model.dto.model.MovieRequestDto;
-import com.cinema.model.dto.model.MovieResponseDto;
-import com.cinema.model.mapper.MovieDtoMapper;
+import com.cinema.model.dto.MovieRequestDto;
+import com.cinema.model.dto.MovieResponseDto;
 import com.cinema.service.MovieService;
+import com.cinema.service.mapper.MovieDtoMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +28,13 @@ public class MovieController {
     @GetMapping
     public List<MovieResponseDto> getAllMovie() {
         return movieService.getAll().stream()
-                .map(movieDtoMapper::toResponseDto)
+                .map(movieDtoMapper::convertToResponseDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping
     public String addMovie(@RequestBody MovieRequestDto movieRequestDto) {
-        movieService.add(movieDtoMapper.fromRequestDto(movieRequestDto));
+        movieService.add(movieDtoMapper.convertFromRequestDto(movieRequestDto));
         return "Movie added successfully";
     }
 }
