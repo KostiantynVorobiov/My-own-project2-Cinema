@@ -6,6 +6,8 @@ import com.cinema.service.CinemaHallService;
 import com.cinema.service.mapper.CinemaHallMapper;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ public class CinemaHallController {
     private final CinemaHallService cinemaHallService;
     private final CinemaHallMapper cinemaHallMapper;
 
+    @Autowired
     public CinemaHallController(CinemaHallService cinemaHallService,
                                 CinemaHallMapper cinemaHallMapper) {
         this.cinemaHallService = cinemaHallService;
