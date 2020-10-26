@@ -47,7 +47,7 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public Movie getById(Long id) {
+    public Movie get(Long id) {
         logger.info("Trying to get movie by id");
         try (Session session = sessionFactory.openSession()) {
             return session.get(Movie.class, id);

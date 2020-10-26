@@ -6,7 +6,7 @@ import java.util.List;
 public interface CinemaHallDao {
     CinemaHall add(CinemaHall cinemaHall);
 
-    CinemaHall getById(Long id);
+    CinemaHall get(Long id);
 
     List<CinemaHall> getAll();
 }

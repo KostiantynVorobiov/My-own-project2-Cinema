@@ -29,14 +29,14 @@ public class MovieSessionController {
     }
 
     @PostMapping
-    public String addMovieSession(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
+    public String add(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
         movieSessionService.add(movieSessionMapper.convertFromRequestDto(movieSessionRequestDto));
         return "Movie session added successfully";
     }
 
     @GetMapping("/available")
-    public List<MovieSessionResponseDto> getAllMovieSession(@RequestParam Long movieId,
-                                                            @RequestParam LocalDate date) {
+    public List<MovieSessionResponseDto> getAvailable(@RequestParam Long movieId,
+                                                      @RequestParam LocalDate date) {
         return movieSessionService.findAvailableSessions(movieId, date).stream()
                 .map(movieSessionMapper::convertToResponseDto)
                 .collect(Collectors.toList());

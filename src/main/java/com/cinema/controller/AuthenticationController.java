@@ -17,7 +17,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public String addMovie(@RequestBody UserRequestDto userRequestDto) {
+    public String register(@RequestBody UserRequestDto userRequestDto) {
         authenticationService.register(userRequestDto.getEmail(), userRequestDto.getPassword());
         return "User registered successfully";
     }
