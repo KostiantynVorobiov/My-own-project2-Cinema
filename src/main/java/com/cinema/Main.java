@@ -85,8 +85,8 @@ public class Main {
         } catch (AuthenticationException e) {
             logger.warn("Wrong email or password",e);
         }
-        logger.info("User by email " + userService.findByEmail(onic.getEmail()).get());
-        User foundUser = userService.findByEmail("onic@u.com").get();
+        logger.info("User by email " + userService.findByEmail(onic.getEmail()));
+        User foundUser = userService.findByEmail("onic@u.com");
         logger.info("My found user: " + foundUser);
 
         ShoppingCartService shoppingCartService =
