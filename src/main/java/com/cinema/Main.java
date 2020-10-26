@@ -44,11 +44,11 @@ public class Main {
         CinemaHallService cinemaHallService = context.getBean(CinemaHallService.class);
         CinemaHall cinemaHallHorror = new CinemaHall();
         cinemaHallHorror.setCapacity(50);
-        cinemaHallHorror.setDescription("for horror");
+        cinemaHallHorror.setDescription("For horror");
         cinemaHallService.add(cinemaHallHorror);
         CinemaHall cinemaHallFamily = new CinemaHall();
         cinemaHallFamily.setCapacity(100);
-        cinemaHallFamily.setDescription("for family");
+        cinemaHallFamily.setDescription("For family");
         cinemaHallService.add(cinemaHallFamily);
         cinemaHallService.getAll().forEach(logger::info);
 

@@ -4,7 +4,6 @@ import com.cinema.dao.UserDao;
 import com.cinema.model.User;
 import com.cinema.service.UserService;
 import com.cinema.util.HashUtil;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
