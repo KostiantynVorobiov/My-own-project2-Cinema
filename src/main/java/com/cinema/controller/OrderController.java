@@ -33,15 +33,15 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<OrderResponseDto> getOrderHistory(@RequestParam String email) {
-        return orderService.getOrderHistory(userService.findByEmail(email)).stream()
+    public List<OrderResponseDto> getOrderHistory(@RequestParam Long userId) {
+        return orderService.getOrderHistory(userService.get(userId)).stream()
                 .map(orderMapper::convertToResponseDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/complete")
-    public String completeOrder(@RequestParam String email) {
-        ShoppingCart shoppingCart = shoppingCartService.getByUser(userService.findByEmail(email));
+    public String completeOrder(@RequestParam Long userId) {
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(userService.get(userId));
         orderService.completeOrder(shoppingCart.getTickets(), shoppingCart.getUser());
         return "Order completed successfully";
     }

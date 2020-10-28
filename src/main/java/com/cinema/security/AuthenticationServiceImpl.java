@@ -5,6 +5,7 @@ import com.cinema.model.User;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
 import com.cinema.util.HashUtil;
+import java.util.Optional;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +18,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     public AuthenticationServiceImpl(UserService userService,
-             ShoppingCartService shoppingCartService) {
+                                     ShoppingCartService shoppingCartService) {
         this.userService = userService;
         this.shoppingCartService = shoppingCartService;
     }
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
-        User userFromDb = userService.findByEmail(email);
-        if (userFromDb != null && userFromDb.getPassword()
-                .equals(HashUtil.hashPassword(password, userFromDb.getSalt()))) {
-            return userFromDb;
+        Optional<User> userFromDb = userService.findByEmail(email);
+        if (userFromDb.isPresent() && userFromDb.get().getPassword()
+                .equals(HashUtil.hashPassword(password, userFromDb.get().getSalt()))) {
+            return userFromDb.get();
         }
         throw new AuthenticationException("Incorrect login or password");
     }
