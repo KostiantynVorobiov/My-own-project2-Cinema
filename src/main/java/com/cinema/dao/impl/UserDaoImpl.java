@@ -63,7 +63,7 @@ public class UserDaoImpl implements UserDao {
     public Optional<User> get(Long id) {
         logger.info("Trying to get user by id");
         try (Session session = sessionFactory.openSession()) {
-            return Optional.of(session.get(User.class, id));
+            return Optional.ofNullable(session.get(User.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get user by id: " + id, e);
         }
