@@ -18,7 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     public AuthenticationServiceImpl(UserService userService,
-             ShoppingCartService shoppingCartService) {
+                                     ShoppingCartService shoppingCartService) {
         this.userService = userService;
         this.shoppingCartService = shoppingCartService;
     }
