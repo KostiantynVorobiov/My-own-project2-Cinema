@@ -1,7 +1,6 @@
 package com.cinema;
 
 import com.cinema.congig.AppConfig;
-import com.cinema.exeption.AuthenticationException;
 import com.cinema.model.CinemaHall;
 import com.cinema.model.Movie;
 import com.cinema.model.MovieSession;
@@ -80,11 +79,11 @@ public class Main {
         onic.setPassword("911");
         UserService userService = context.getBean(UserService.class);
         authenticationService.register(onic.getEmail(), onic.getPassword());
-        try {
+        /*try {
             authenticationService.login(onic.getEmail(), onic.getPassword());
         } catch (AuthenticationException e) {
             logger.warn("Wrong email or password",e);
-        }
+        }**/
         logger.info("User by email " + userService.findByEmail(onic.getEmail()).get());
         User foundUser = userService.findByEmail("onic@u.com").get();
         logger.info("My found user: " + foundUser);
@@ -93,11 +92,11 @@ public class Main {
                 context.getBean(ShoppingCartService.class);
         authenticationService.register("emily@com", "12345");
         User emily = null;
-        try {
+        /*try {
             emily = authenticationService.login("emily@com", "12345");
         } catch (AuthenticationException e) {
             logger.warn("Wrong email or password",e);
-        }
+        }**/
         shoppingCartService.addSession(movieSession1, emily);
         logger.info("Get cart by Emily user: " + shoppingCartService.getByUser(emily));
         shoppingCartService.clear(shoppingCartService.getByUser(emily));
