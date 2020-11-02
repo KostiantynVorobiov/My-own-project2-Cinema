@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class MovieRequestDto {
-    @NotEmpty(message = "Should be movie title")
+    @NotEmpty(message = "Movie title can't be empty")
     private String title;
-    @NotEmpty(message = "Should be description for movie")
+    @NotEmpty(message = "Description can't be empty")
     private String description;
 }

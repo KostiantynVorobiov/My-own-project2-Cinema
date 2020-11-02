@@ -17,7 +17,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .inMemoryAuthentication()
                 .passwordEncoder(getEncoder())
-                .withUser("bob").password(getEncoder().encode("12345")).roles("USER");
+                .withUser("bob").password(getEncoder().encode("12345")).roles("USER")
+                .and()
+                .withUser("bob@i.ua").password(getEncoder().encode("12345")).roles("USER");
     }
 
     protected void configure(HttpSecurity http) throws Exception {

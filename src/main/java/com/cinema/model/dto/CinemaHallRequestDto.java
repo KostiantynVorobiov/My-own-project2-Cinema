@@ -7,9 +7,9 @@ import lombok.Data;
 
 @Data
 public class CinemaHallRequestDto {
-    @Positive(message = "Must be greater than 0")
+    @Positive(message = "Capacity must be greater than 0")
     private int capacity;
-    @NotNull(message = "Should be description for cinema hall")
+    @NotNull(message = "Description can't be null")
     @NotEmpty(message = "Should be description for cinema hall")
     private String description;
 }

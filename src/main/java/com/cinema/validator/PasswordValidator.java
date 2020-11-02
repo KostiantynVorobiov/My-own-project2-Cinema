@@ -1,6 +1,7 @@
 package com.cinema.validator;
 
 import com.cinema.model.dto.UserRequestDto;
+import java.util.Objects;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -11,6 +12,6 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Use
                            ConstraintValidatorContext constraintValidatorContext) {
         String password = userRequestDto.getPassword();
         String repeatPassword = userRequestDto.getRepeatPassword();
-        return password != null && password.equals(repeatPassword);
+        return password != null && Objects.equals(password, repeatPassword);
     }
 }
