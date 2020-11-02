@@ -1,11 +1,8 @@
 package com.cinema.security;
 
-import com.cinema.exeption.AuthenticationException;
 import com.cinema.model.User;
 import com.cinema.service.ShoppingCartService;
 import com.cinema.service.UserService;
-import com.cinema.util.HashUtil;
-import java.util.Optional;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,16 +18,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                      ShoppingCartService shoppingCartService) {
         this.userService = userService;
         this.shoppingCartService = shoppingCartService;
-    }
-
-    @Override
-    public User login(String email, String password) throws AuthenticationException {
-        Optional<User> userFromDb = userService.findByEmail(email);
-        if (userFromDb.isPresent() && userFromDb.get().getPassword()
-                .equals(HashUtil.hashPassword(password, userFromDb.get().getSalt()))) {
-            return userFromDb.get();
-        }
-        throw new AuthenticationException("Incorrect login or password");
     }
 
     @Override
