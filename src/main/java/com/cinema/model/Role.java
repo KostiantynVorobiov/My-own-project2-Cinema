@@ -20,8 +20,8 @@ public class Role {
     public Role() {
     }
 
-    public Role(RoleName valueOf) {
-        this.roleName = valueOf;
+    public Role(RoleName roleName) {
+        this.roleName = roleName;
     }
 
     public static Role of(String roleName) {
